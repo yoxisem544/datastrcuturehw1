@@ -13,20 +13,44 @@ typedef struct _List
 	struct _List *nextNode;
 } List;
 
-void createList (List * list,int x, int y) // (a) requirment ok
+List * createList (List * list,int x, int y) // (a) requirment ok
 {
-	list->x = x;
-	list->y = y;
-	list->nextNode = NULL;
+	if (list != NULL)
+	{
+		list->x = x;
+		list->y = y;
+		list->nextNode = NULL;
+	}
+	else 
+	{
+		list = (List *)malloc(sizeof(List));
+		list->x = x;
+		list->y = y;
+		list->nextNode = NULL;
+	}
+
+	return list;
 }
 int isEmpty (List * list) // (b) requirment
+{
+	if (list == NULL) 
+	{
+		printf("List is empty\n");
+		return EMPTY;
+	}
+
+	printf("List is not empty\n");
+	return NOTEMPTY;
+}
+
+int isEmptyForPrintList (List * list) // (b) requirment
 {
 	if (list == NULL) 
 		return EMPTY;
 	return NOTEMPTY;
 }
 
-void insertAtTheEndOfList (List * list) // (c) requirment ok
+void insertAtTheEndOfList (List * list, int x, int y) // (c) requirment ok
 {
 	List * tmpList = list;
 
@@ -36,7 +60,8 @@ void insertAtTheEndOfList (List * list) // (c) requirment ok
 
 	//malloc & init next node.
 	tmpList->nextNode = (List *)malloc(sizeof(List));
-	createList(tmpList->nextNode, tmpList->x + 1, tmpList->y + 1);
+	// createList(tmpList->nextNode, tmpList->x + 1, tmpList->y + 1);
+	createList(tmpList->nextNode, x, y);
 }
 
 int searchXY (List * list, int x, int y) // (d) ok
@@ -46,10 +71,13 @@ int searchXY (List * list, int x, int y) // (d) ok
 	while (tmpList != NULL)
 	{
 		if (tmpList->x == x && tmpList->y == y)
+		{
+			printf("Found (%d,%d)\n", x, y);
 			return FOUND;
+		}
 		tmpList = tmpList->nextNode;
 	}
-
+	printf("(%d,%d) not found.\n", x, y);
 	return NOTFOUND;
 }
 
@@ -60,7 +88,7 @@ List * deletePoint (List * list, int x, int y) // (e) ok
 
 	if (previousNode->x == x && previousNode->y == y)
 	{
-		printf("yes,x= %d, y= %d\n",previousNode->x,previousNode->y);
+		// printf("yes,x= %d, y= %d\n",previousNode->x,previousNode->y);
 		previousNode = previousNode->nextNode;
 		return previousNode;
 	}
@@ -87,16 +115,19 @@ List * deletePoint (List * list, int x, int y) // (e) ok
 
 void printOutList (List * list) // (f) ok
 {
-	if (isEmpty(list) == NOTEMPTY)
+	if (isEmptyForPrintList(list) == NOTEMPTY)
 	{
 		List * tmpList = list; 
-		int counter = 1;
+
+		printf("This is your list:\n");
 		while (tmpList != NULL)
 		{
-			printf("index = %d, x = %d, y = %d\n", counter, tmpList->x, tmpList->y);
-			counter += 1;
+			printf("(%d,%d)", tmpList->x, tmpList->y);
+			if (tmpList->nextNode != NULL) 
+				printf("->");
 			tmpList = tmpList->nextNode;
 		}
+		printf("\n");
 	}
 	else
 		printf("%s\n", "This list is empty");
@@ -128,20 +159,79 @@ int main ()
 	List *list;
 	char i, j, k;
 
+	printf("Please choose function:\n");
+	printf("(a) Create a list of points. ex: a 1 2, create a starting point (1,2).\n");
+	printf("(b) Determine if a list is empty.\n");
+	printf("(c) Insert a point at the end of a list. ex: c 1 2, insert a point (1,2) at the end.\n");
+	printf("(d) Search for a point. ex: d 1 2, search for point (1,2).\n");
+	printf("(e) Delete a point. ex: e 1 2, delete point (1,2).\n");
+	printf("(f) Print out a list.\n");
+	printf("(g) Count the number of points in a list.\n");
 	while (1)
 	{
-		printf("Please choose function:\n");
-		printf("(a) Create a list of points.\n");
-		printf("(b) Determine if a list is empty.\n");
-		printf("(c) Insert a point at the end of a list.\n");
-		printf("(d) Search for a point.\n");
-		printf("(e) Delete a point.\n");
-		printf("(f) Print out a list.\n");
-		printf("(g) Count the number of points in a list.\n");
 		printf("=> ");
 		do {
 			scanf("%c", &i);
 		} while (i == 32 || i == 10);
+
+		if (i == 'a')
+		{
+			do
+			{
+				scanf("%c", &j);
+			} while (j == 32 || j == 10);
+			do
+			{
+				scanf("%c", &k);
+			} while (k == 32 || k == 10);
+
+			list = createList(list, j - '0', k - '0');
+		}
+		else if (i == 'b')
+			isEmpty(list);
+		else if (i == 'c')
+		{
+			do
+			{
+				scanf("%c", &j);
+			} while (j == 32 || j == 10);
+			do
+			{
+				scanf("%c", &k);
+			} while (k == 32 || k == 10);
+
+			insertAtTheEndOfList(list, j - '0', k - '0');
+		}
+		else if (i == 'd')
+		{
+			do
+			{
+				scanf("%c", &j);
+			} while (j == 32 || j == 10);
+			do
+			{
+				scanf("%c", &k);
+			} while (k == 32 || k == 10);
+
+			searchXY(list, j - '0', k - '0');
+		}
+		else if (i == 'e')
+		{
+			do
+			{
+				scanf("%c", &j);
+			} while (j == 32 || j == 10);
+			do
+			{
+				scanf("%c", &k);
+			} while (k == 32 || k == 10);
+
+			list = deletePoint(list, j - '0', k - '0');
+		}
+		else if (i == 'f')
+			printOutList(list);
+		else if (i == 'g')
+			countTheNumberOfPointsInList(list);
 	}
 
 	return 0;
