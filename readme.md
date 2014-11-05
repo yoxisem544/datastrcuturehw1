@@ -9,11 +9,17 @@ For a linked list of two-dimensional points (i.e. (x, y)) create a user-friendly
 that performs the following operations. Please discuss the complexity for each operation.
 ###requirment
 (a) Create a list of points.
+
 (b) Determine if a list is empty.
+
 (c) Insert a point at the end of a list.
+
 (d) Search for a point.
+
 (e) Delete a point.
+
 (f) Print out a list.
+
 (g) Count the number of points in a list.
 
 ##Build
