@@ -13,7 +13,7 @@ typedef struct _List
 	struct _List *nextNode;
 } List;
 
-List * createList (List * list,int x, int y) // (a) requirment ok
+List * createList (List * list, int x, int y) // (a) requirment ok
 {
 	if (list != NULL)
 	{
@@ -157,7 +157,8 @@ int main ()
 {
 	//init list & set next node to NULL
 	List *list;
-	char i, j, k;
+	char i;
+	int j, k;
 
 	printf("Please choose function:\n");
 	printf("(a) Create a list of points. ex: a 1 2, create a starting point (1,2).\n");
@@ -178,14 +179,14 @@ int main ()
 		{
 			do
 			{
-				scanf("%c", &j);
+				scanf("%d", &j);
 			} while (j == 32 || j == 10);
 			do
 			{
-				scanf("%c", &k);
+				scanf("%d", &k);
 			} while (k == 32 || k == 10);
 
-			list = createList(list, j - '0', k - '0');
+			list = createList(list, j, k);
 		}
 		else if (i == 'b')
 			isEmpty(list);
@@ -193,40 +194,40 @@ int main ()
 		{
 			do
 			{
-				scanf("%c", &j);
+				scanf("%d", &j);
 			} while (j == 32 || j == 10);
 			do
 			{
-				scanf("%c", &k);
+				scanf("%d", &k);
 			} while (k == 32 || k == 10);
 
-			insertAtTheEndOfList(list, j - '0', k - '0');
+			insertAtTheEndOfList(list, j, k);
 		}
 		else if (i == 'd')
 		{
 			do
 			{
-				scanf("%c", &j);
+				scanf("%d", &j);
 			} while (j == 32 || j == 10);
 			do
 			{
-				scanf("%c", &k);
+				scanf("%d", &k);
 			} while (k == 32 || k == 10);
 
-			searchXY(list, j - '0', k - '0');
+			searchXY(list, j, k);
 		}
 		else if (i == 'e')
 		{
 			do
 			{
-				scanf("%c", &j);
+				scanf("%d", &j);
 			} while (j == 32 || j == 10);
 			do
 			{
-				scanf("%c", &k);
+				scanf("%d", &k);
 			} while (k == 32 || k == 10);
 
-			list = deletePoint(list, j - '0', k - '0');
+			list = deletePoint(list, j, k);
 		}
 		else if (i == 'f')
 			printOutList(list);
