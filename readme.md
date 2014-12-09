@@ -2,7 +2,7 @@
 ##Linked list of two-dimensional points
 
 ##This is hw 1 of data structure.
-e
+![preview](1.png)
 ###Question
 For a linked list of two-dimensional points (i.e. (x, y)) create a user-friendly, menu-driven program
 that performs the following operations. Please discuss the complexity for each operation.
